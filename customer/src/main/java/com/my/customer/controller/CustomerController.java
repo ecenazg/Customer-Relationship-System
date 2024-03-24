@@ -1,8 +1,5 @@
 package com.my.customer.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.my.customer.entity.Customer;
 import com.my.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ecenaz Güngör
@@ -48,14 +48,20 @@ public class CustomerController {
     }
 
     @GetMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("customer_id") Long id,
-                                    Model cus) {
+    public String showFormForUpdate(@RequestParam("customer_id") Long id, Model cus) {
+        Optional<Customer> result = customerService.findCustomerById(id);
 
-        Optional newCustomer = customerService.findCustomerById(id);
-        cus.addAttribute("customer", newCustomer);
+        if (result.isPresent()) {
+            Customer existingCustomer = result.get();
+            cus.addAttribute("customer", existingCustomer);
+        } else {
+            return "redirect:/customer/list";
+        }
 
         return "customer-form";
     }
+
+
 
     @GetMapping("/delete")
     public String deleteCustomer(@RequestParam("customerId") Long id) {
