@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="base :: base(~{::body},'Customer Form')">
+<head>
+  <title>Add/Edit Customer</title>
+</head>
+<body>
+<div th:fragment="content">
+  <h2>Add/Edit Customer</h2>
+  <form th:action="@{/customer/saveCustomer}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{customer_id}" />
+    <p>
+      <label>Name</label>
+      <input type="text" th:field="*{name}" required />
+    </p>
+    <p>
+      <label>Email</label>
+      <input type="email" th:field="*{email}" required />
+    </p>
+    <p>
+      <label>Phone</label>
+      <input type="text" th:field="*{phone}" />
+    </p>
+    <p>
+      <label>Address</label>
+      <input type="text" th:field="*{address}" />
+    </p>
+    <p>
+      <button type="submit">Save</button>
+    </p>
+  </form>
+</div>
+</body>
+</html>

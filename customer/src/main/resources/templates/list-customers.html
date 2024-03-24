@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customers</title>
+</head>
+<body>
+<h1>Customers</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.name}">Name</td>
+        <td th:text="${customer.email}">Email</td>
+        <td th:text="${customer.phone}">Phone</td>
+        <td>
+            <a th:href="@{/customer/showFormForUpdate(customer_id=${customer.customer_id})}">Edit</a>
+            <a th:href="@{/customer/delete(customerId=${customer.customer_id})}" onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/customer/showFormForAdd">Add New Customer</a>
+</body>
+</html>
